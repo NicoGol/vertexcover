@@ -24,7 +24,7 @@ class KMedoids(Problem):
         clusters = dict.fromkeys(medoids)
         for point in range(self.n_points):
             if point not in medoids:
-                best = None 
+                best = None
                 for medoid in medoids
 
     # if you want you can implement this method and use it the maxvalue and randomized_maxvalue functions
