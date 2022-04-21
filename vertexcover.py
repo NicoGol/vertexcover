@@ -17,11 +17,11 @@ class VertexCover(Problem):
 
 class State:
 
-    def __init__(self, k, vertex, edges, cover=None, not_cover=None):
+    def __init__(self, k, vertices, edges, cover=None, not_cover=None):
         self.k = k
-        self.n_vertex = len(vertex)
+        self.n_vertex = len(vertices)
         self.n_edges = len(edges)
-        self.vertex = vertex
+        self.vertices = vertices
         self.edges = edges
         if cover is None:
             self.cover = self.build_init()
@@ -47,20 +47,20 @@ def read_instance(instanceFile):
     file = open(instanceFile)
     line = file.readline()
     k = int(line.split(' ')[0])
-    n_vertex = int(line.split(' ')[1])
+    n_vertices = int(line.split(' ')[1])
     n_edges = int(line.split(' ')[2])
-    vertex = {}
-    for i in range(n_vertex):
-        vertex[i] = []
+    vertices = {}
+    for i in range(n_vertices):
+        vertices[i] = []
     edges = {}
     line = file.readline()
     while line:
         [edge,vertex1,vertex2] = [int(x) for x in line.split(' ')]
-        vertex[vertex1] += [edge]
-        vertex[vertex2] += [edge]
+        vertices[vertex1] += [edge]
+        vertices[vertex2] += [edge]
         edges[edge] = (vertex1,vertex2)
         line = file.readline()
-    return k, vertex, edges
+    return k, vertices, edges
 
 # Attention : Depending of the objective function you use, your goal can be to maximize or to minimize it
 def maxvalue(problem, limit=100, callback=None):

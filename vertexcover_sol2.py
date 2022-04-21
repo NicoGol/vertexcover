@@ -10,14 +10,14 @@ class MaximumVertexCover(Problem):
     def successor(self, state):
         for u in state.cover:
             for v in state.not_cover:
-                yield (None,State(state.k,state.vertex,state.edges,[x for x in state.cover if x != u]+[v],[x for x in state.not_cover if x != v]+[u]))
+                yield (None,State(state.k,state.vertices,state.edges,[x for x in state.cover if x != u]+[v],[x for x in state.not_cover if x != v]+[u]))
 
 
     # if you want you can implement this method and use it the maxvalue and randomized_maxvalue functions
     def value(self, state):
         edges_covered = []
         for v in state.cover:
-            for e in state.vertex[v]:
+            for e in state.vertices[v]:
                 if e not in edges_covered:
                     edges_covered += [e]
         return len(edges_covered)
@@ -25,11 +25,11 @@ class MaximumVertexCover(Problem):
 
 class State:
 
-    def __init__(self, k, vertex, edges, cover=None, not_cover=None):
+    def __init__(self, k, vertices, edges, cover=None, not_cover=None):
         self.k = k
-        self.n_vertex = len(vertex)
+        self.n_vertex = len(vertices)
         self.n_edges = len(edges)
-        self.vertex = vertex
+        self.vertices = vertices
         self.edges = edges
         if cover is None:
             self.cover = self.build_init()
@@ -55,20 +55,23 @@ def read_instance(instanceFile):
     file = open(instanceFile)
     line = file.readline()
     k = int(line.split(' ')[0])
-    n_vertex = int(line.split(' ')[1])
+    n_vertices = int(line.split(' ')[1])
     n_edges = int(line.split(' ')[2])
-    vertex = {}
-    for i in range(n_vertex):
-        vertex[i] = []
-    edges = {}
+    vertices = {}
+    for i in range(n_vertices):
+        vertices[i] = []
+    edges = []
     line = file.readline()
     while line:
         [edge,vertex1,vertex2] = [int(x) for x in line.split(' ')]
-        vertex[vertex1] += [edge]
-        vertex[vertex2] += [edge]
-        edges[edge] = (vertex1,vertex2)
+        vertices[vertex1] += [edge]
+        vertices[vertex2] += [edge]
+        if (vertex1,vertex2) in edges:
+            print('already in : ',edge)
+        else:
+            edges.append((vertex1,vertex2))
         line = file.readline()
-    return k, vertex, edges
+    return k, vertices, edges
 
 # Attention : Depending of the objective function you use, your goal can be to maximize or to minimize it
 def maxvalue(problem, limit=100, callback=None):
