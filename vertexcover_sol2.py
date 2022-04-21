@@ -27,7 +27,7 @@ class State:
 
     def __init__(self, k, vertices, edges, cover=None, not_cover=None):
         self.k = k
-        self.n_vertex = len(vertices)
+        self.n_vertices = len(vertices)
         self.n_edges = len(edges)
         self.vertices = vertices
         self.edges = edges
@@ -36,7 +36,7 @@ class State:
         else:
             self.cover = cover
         if not_cover is None:
-            self.not_cover = [v for v in range(self.n_vertex) if v not in self.cover]
+            self.not_cover = [v for v in range(self.n_vertices) if v not in self.cover]
         else:
             self.not_cover = not_cover
 
