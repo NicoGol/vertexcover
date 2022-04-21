@@ -4,7 +4,7 @@ from search import *
 import sys
 
 
-class MaximumVertexCover(Problem):
+class VertexCover(Problem):
 
     # if you want you can implement this method and use it in the maxvalue and randomized_maxvalue functions
     def successor(self, state):
@@ -87,7 +87,7 @@ def randomized_maxvalue(problem, limit=100, callback=None):
 if __name__ == '__main__':
     info = read_instance(sys.argv[1])
     init_state = State(info[0], info[1], info[2])
-    mvc_problem = MaximumVertexCover(init_state)
+    mvc_problem = VertexCover(init_state)
     step_limit = 100
     node = randomized_maxvalue(mvc_problem, step_limit)
     state = node.state
